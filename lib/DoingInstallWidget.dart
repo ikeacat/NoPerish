@@ -1,4 +1,4 @@
-// InitialConfigWidget.dart
+// DoingInstallWidget.dart
 // This project, which includes this file, is licensed under GNU General
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
