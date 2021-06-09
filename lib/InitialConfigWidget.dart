@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:noperish/DoingInstallWidget.dart';
 
 class InitialConfigWidget extends StatefulWidget {
   InitialConfigWidget({Key? key}) : super(key: key);
@@ -155,6 +156,13 @@ class ICWState extends State<InitialConfigWidget> {
                                 Text('Fields on the form cannot be empty thx.'),
                             duration: Duration(seconds: 5),
                           ));
+                        } else {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DoingInstallWidget(
+                                    username: username.text,
+                                    password: password.text,
+                                    platform: currentItem,
+                                  )));
                         }
                       } else {
                         print('ballz');
