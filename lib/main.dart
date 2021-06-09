@@ -1,10 +1,16 @@
+// main.dart
+// This project, which includes this file, is licensed under GNU General
+// Public License v3.0.
+// Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
+// Or just look at the LICENSE file.
+// Last Updated 8 June 2021
+
 import 'package:flutter/material.dart';
+import 'package:noperish/InitialConfigWidget.dart';
 
-void main() {
-  runApp(MyApp());
-}
+void main() => runApp(NoPerish());
 
-class MyApp extends StatelessWidget {
+class NoPerish extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -12,6 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
+      home: InitialConfigWidget(),
     );
   }
 }
