@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'dart:io';
 
 class DoingInstallWidget extends StatefulWidget {
   DoingInstallWidget({Key? key, this.platform, this.username, this.password})
@@ -21,12 +22,18 @@ class DoingInstallWidget extends StatefulWidget {
 
 class DIState extends State<DoingInstallWidget> {
   var currentMessage = '';
+  var lock = false;
 
   void doInstall(BuildContext context) async {
+    // So that when setState rebuilds the request doesnt do this again.
+    if (lock) {
+      print('lock');
+      return;
+    }
+    lock = true;
+
     // Ping NS to verify credentials.
-    setState(() {
-      currentMessage = 'Verifying credentials with NS...';
-    });
+    updateMessage('Verifying Credentials with NS.');
     var ping = await pingNS();
     print(ping.headers);
     //print(ping.body);
@@ -50,12 +57,40 @@ class DIState extends State<DoingInstallWidget> {
           'There were too many requests to the NationStates API from this device. Try again in ${ping.headers["X-Retry-After"]} seconds. (Status Code 429 Too Many Requests)',
           context);
       return;
+    } else if (ping.statusCode == 200) {
+      // This is wanted. Just to exclude it from the else statement.
     } else {
       errorAlertAndPop(
           "NationStates didn't respond with a 200 status code. (HTTP Status Code ${ping.statusCode})",
           context);
       return;
     }
+
+    if (widget.platform == null) {
+      errorAlertAndPop(
+          'Platform was null. Make sure a platform is selected.', context);
+      return;
+    }
+
+    //setState(() {
+    //  currentMessage = 'Running root check (id)';
+    //});
+
+    // Root check if Linux.
+    if (widget.platform!.startsWith('Linux')) {
+      updateMessage('Checking for root. (Linux)');
+      var rootcheck = await Process.run('id', []);
+      print(rootcheck.stdout);
+      if (!rootcheck.stdout.toString().contains('uid=0')) {
+        errorAlertAndPop('Run as root.', context);
+      }
+    }
+  }
+
+  void updateMessage(String message) {
+    setState(() {
+      currentMessage = message;
+    });
   }
 
   void errorAlertAndPop(String message, BuildContext context) {
