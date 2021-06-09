@@ -18,6 +18,9 @@ class InitialConfigWidget extends StatefulWidget {
 class ICWState extends State<InitialConfigWidget> {
   final TextEditingController username = TextEditingController();
   final TextEditingController password = TextEditingController();
+
+  final combokey = GlobalKey<FormState>();
+
   var currentItem = 'Linux (Systemd)';
 
   @override
@@ -43,18 +46,37 @@ class ICWState extends State<InitialConfigWidget> {
                   ),
 
                   // Combo Form
-                  TextFormField(
-                    autocorrect: false,
-                    decoration: InputDecoration(labelText: 'Username'),
-                    controller: username,
-                  ),
-                  TextFormField(
-                    autocorrect: false,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
+                  Form(
+                    key: combokey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          autocorrect: false,
+                          decoration: InputDecoration(labelText: 'Username'),
+                          controller: username,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Username field cannot be empty.';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          autocorrect: false,
+                          decoration: InputDecoration(
+                            labelText: 'Password',
+                          ),
+                          validator: (value) {
+                            if (value == null || value.isEmpty || value == '') {
+                              return 'Password field cannot be empty.';
+                            }
+                            return null;
+                          },
+                          controller: password,
+                          obscureText: true,
+                        ),
+                      ],
                     ),
-                    controller: password,
-                    obscureText: true,
                   ),
 
                   // Platform
@@ -124,7 +146,19 @@ class ICWState extends State<InitialConfigWidget> {
                   // Submit Button
                   ElevatedButton(
                     onPressed: () {
-                      return;
+                      if (combokey.currentState != null) {
+                        var val = combokey.currentState!.validate();
+                        print(val);
+                        if (!val) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content:
+                                Text('Fields on the form cannot be empty thx.'),
+                            duration: Duration(seconds: 5),
+                          ));
+                        }
+                      } else {
+                        print('ballz');
+                      }
                     },
                     child: Padding(
                       padding: EdgeInsets.only(
