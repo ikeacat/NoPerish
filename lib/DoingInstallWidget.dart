@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 9 June 2021
+// Last Updated 10 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -91,6 +91,27 @@ class DIState extends State<DoingInstallWidget> {
         updateMessage('Writing username & PIN to /etc/noperish/combo.cfg');
         await File('/etc/noperish/combo.cfg')
             .writeAsString('${widget.username} ${ping.headers["x-pin"]}');
+
+        updateMessage('Copying NPStartup binary to etc directory');
+        print(Directory.current);
+        await File('lib/premades/dist/NPStartup-Linux')
+            .copy('/etc/noperish/NPStartup-Linux');
+
+        if (widget.platform! == 'Linux (Systemd)') {
+          updateMessage('Copying and Installing noperish.service');
+          await File('lib/premades/noperish.service')
+              .copy('/etc/systemd/system/noperish.service');
+
+          // Enable NoPerish in Systemd
+          updateMessage('Enabling noperish service');
+          var systemctl =
+              await Process.run('systemctl', ['enable', 'noperish']);
+          if (systemctl.stdout.toString().contains('could not be found')) {
+            errorAlertAndPop(
+                'Error while enabling service: ${systemctl.stdout}', context);
+            return;
+          } else {}
+        }
       } else {
         errorAlertAndPop('Could not create /etc/noperish/', context);
         return;

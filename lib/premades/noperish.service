@@ -1,0 +1,12 @@
+[Unit]
+Description=Never Perish. Ever. Pings NS so a nation never perishes, as long as this device gets booted up.
+After=network.target network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=2
+
+[Service]
+Type=oneshot
+ExecStart=/etc/noperish/NPStartup-Linux
+
+[Install]
+WantedBy=multi-user.target
