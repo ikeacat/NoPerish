@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:io';
 
+import 'package:noperish/DoneWidgetLinux.dart';
+
 class DoingInstallWidget extends StatefulWidget {
   DoingInstallWidget({Key? key, this.platform, this.username, this.password})
       : super(key: key);
@@ -23,6 +25,7 @@ class DoingInstallWidget extends StatefulWidget {
 class DIState extends State<DoingInstallWidget> {
   var currentMessage = '';
   var lock = false;
+  var keepTrack = <String>[];
 
   void doInstall(BuildContext context) async {
     // So that when setState rebuilds the request doesnt do this again.
@@ -110,7 +113,13 @@ class DIState extends State<DoingInstallWidget> {
             errorAlertAndPop(
                 'Error while enabling service: ${systemctl.stdout}', context);
             return;
-          } else {}
+          } else {
+            updateMessage('Done!');
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => DoneWidgetLinux(
+                      whathappened: keepTrack,
+                    )));
+          }
         }
       } else {
         errorAlertAndPop('Could not create /etc/noperish/', context);
@@ -120,6 +129,7 @@ class DIState extends State<DoingInstallWidget> {
   }
 
   void updateMessage(String message) {
+    keepTrack.add(message);
     setState(() {
       currentMessage = message;
     });
