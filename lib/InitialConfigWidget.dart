@@ -93,9 +93,9 @@ class ICWState extends State<InitialConfigWidget> {
                     ),
                     items: <String>[
                       'Linux (Systemd)',
-                      'Linux (Crontab)',
-                      'macOS (launchd)',
-                      'Windows (Windows Task Scheduler)',
+                      'Linux (Crontab) (not supported yet)',
+                      'macOS (launchd) (not supported yet)',
+                      'Windows (Windows Task Scheduler) (not supported yet)',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
@@ -176,7 +176,15 @@ class ICWState extends State<InitialConfigWidget> {
                         style: TextStyle(fontWeight: FontWeight.bold),
                       ),
                     ),
-                  )
+                  ),
+                  SizedBox(
+                    height: 3,
+                  ),
+                  Text(
+                    'Your password will never be stored on the device & is only sent to NationStates. Only the generated PIN & Nation name is stored.',
+                    style: TextStyle(
+                        color: Colors.blueGrey, fontStyle: FontStyle.italic),
+                  ),
                 ],
               ))),
     );
