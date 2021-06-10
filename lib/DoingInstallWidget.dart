@@ -76,13 +76,24 @@ class DIState extends State<DoingInstallWidget> {
     //  currentMessage = 'Running root check (id)';
     //});
 
-    // Root check if Linux.
+    // This is where it gets platform specific.
     if (widget.platform!.startsWith('Linux')) {
-      updateMessage('Checking for root. (Linux)');
+      updateMessage('Checking for root.');
       var rootcheck = await Process.run('id', []);
-      print(rootcheck.stdout);
       if (!rootcheck.stdout.toString().contains('uid=0')) {
         errorAlertAndPop('Run as root.', context);
+        return;
+      }
+
+      updateMessage('Creating /etc/noperish');
+      var etcDirectory = await Directory('/etc/noperish').create();
+      if (await etcDirectory.exists()) {
+        updateMessage('Writing username & PIN to /etc/noperish/combo.cfg');
+        await File('/etc/noperish/combo.cfg')
+            .writeAsString('${widget.username} ${ping.headers["x-pin"]}');
+      } else {
+        errorAlertAndPop('Could not create /etc/noperish/', context);
+        return;
       }
     }
   }
