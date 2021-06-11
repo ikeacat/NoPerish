@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 10 June 2021
+// Last Updated 11 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -119,6 +119,38 @@ class DIState extends State<DoingInstallWidget> {
                 builder: (context) => DoneWidgetLinux(
                       whathappened: keepTrack,
                     )));
+          }
+        } else if (widget.platform! == 'Linux (Crontab)') {
+          updateMessage('Writing to system crontab at /var/spool/cron/root');
+          var rootCron = await File('/var/spool/cron/root').create();
+          await rootCron.writeAsString('@reboot /etc/noperish/NPStartup-Linux',
+              mode: FileMode.append);
+
+          updateMessage('Verifying crontab file');
+          var cronverify =
+              await Process.run('crontab', ['-T', '/var/spool/cron/root']);
+          print(cronverify.exitCode);
+          print(cronverify.stderr);
+          print(cronverify.stdout);
+          if (cronverify.stdout.toString().contains('No syntax issues')) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => DoneWidgetLinux(
+                      whathappened: keepTrack,
+                    )));
+            return;
+          } else if (cronverify.stderr.contains('Invalid crontab file') ||
+              cronverify.stdout.contains('Invalid crontab file')) {
+            errorAlertAndPop(
+                'Crontab file is invalid.\n stderr: ${cronverify.stderr.toString()}',
+                context);
+            return;
+          } else {
+            errorAlertAndPop(
+                'There was an unknown error while verifying the crontab.' +
+                    cronverify.stderr.toString() +
+                    cronverify.stdout.toString(),
+                context);
+            return;
           }
         }
       } else {
