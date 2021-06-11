@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 10 June 2021
+// Last Updated 11 June 2021
 
 import 'dart:io';
 
@@ -95,7 +95,7 @@ class ICWState extends State<InitialConfigWidget> {
                       'Linux (Systemd)',
                       'Linux (Crontab) (integrated but not supported yet)',
                       'macOS (launchd) (not supported yet)',
-                      'Windows (Windows Task Scheduler) (not supported yet)',
+                      'Windows (Windows Task Scheduler)',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
@@ -156,7 +156,9 @@ class ICWState extends State<InitialConfigWidget> {
                             duration: Duration(seconds: 5),
                           ));
                         } else {
-                          if (currentItem == 'Linux (Systemd)') {
+                          if (currentItem == 'Linux (Systemd)' ||
+                              currentItem ==
+                                  'Windows (Windows Task Scheduler)') {
                             Navigator.of(context).push(MaterialPageRoute(
                                 builder: (context) => DoingInstallWidget(
                                       username: username.text,
@@ -166,7 +168,7 @@ class ICWState extends State<InitialConfigWidget> {
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(
-                                    "Windows, macOS, and Linux (Crontab) aren't supported yet. Sorry!"),
+                                    "macOS and Linux (Crontab) aren't supported yet. Sorry!"),
                                 duration: Duration(seconds: 7)));
                             return;
                           }
