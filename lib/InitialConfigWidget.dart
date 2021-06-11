@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 9 June 2021
+// Last Updated 10 June 2021
 
 import 'dart:io';
 
@@ -93,7 +93,7 @@ class ICWState extends State<InitialConfigWidget> {
                     ),
                     items: <String>[
                       'Linux (Systemd)',
-                      'Linux (Crontab) (not supported yet)',
+                      'Linux (Crontab) (integrated but not supported yet)',
                       'macOS (launchd) (not supported yet)',
                       'Windows (Windows Task Scheduler) (not supported yet)',
                     ].map<DropdownMenuItem<String>>((String value) {
@@ -149,7 +149,6 @@ class ICWState extends State<InitialConfigWidget> {
                     onPressed: () {
                       if (combokey.currentState != null) {
                         var val = combokey.currentState!.validate();
-                        print(val);
                         if (!val) {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                             content:
@@ -157,15 +156,21 @@ class ICWState extends State<InitialConfigWidget> {
                             duration: Duration(seconds: 5),
                           ));
                         } else {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => DoingInstallWidget(
-                                    username: username.text,
-                                    password: password.text,
-                                    platform: currentItem,
-                                  )));
+                          if (currentItem == 'Linux (Systemd)') {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => DoingInstallWidget(
+                                      username: username.text,
+                                      password: password.text,
+                                      platform: currentItem,
+                                    )));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    "Windows, macOS, and Linux (Crontab) aren't supported yet. Sorry!"),
+                                duration: Duration(seconds: 7)));
+                            return;
+                          }
                         }
-                      } else {
-                        print('ballz');
                       }
                     },
                     child: Padding(
