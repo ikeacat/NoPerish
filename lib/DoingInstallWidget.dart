@@ -97,13 +97,38 @@ class DIState extends State<DoingInstallWidget> {
 
         updateMessage('Copying NPStartup binary to etc directory');
         print(Directory.current);
-        await File('lib/premades/dist/NPStartup-Linux')
-            .copy('/etc/noperish/NPStartup-Linux');
+        if (!await Directory('lib/premades').exists()) {
+          errorAlertAndPop('Premades directory does not exist.', context);
+        }
+        try {
+          await File('lib/premades/dist/NPStartup-Linux')
+              .copy('/etc/noperish/NPStartup-Linux');
+        } catch (err) {
+          if (err is FileSystemException) {
+            if (err.message.contains('No such file or directory')) {
+              errorAlertAndPop(
+                  'lib/premades/dist/NPStartup-Linux does not exist. The program cannot go on.',
+                  context);
+              return;
+            }
+          }
+        }
 
         if (widget.platform! == 'Linux (Systemd)') {
           updateMessage('Copying and Installing noperish.service');
-          await File('lib/premades/noperish.service')
-              .copy('/etc/systemd/system/noperish.service');
+          try {
+            await File('lib/premades/noperish.service')
+                .copy('/etc/systemd/system/noperish.service');
+          } catch (err) {
+            if (err is FileSystemException) {
+              if (err.message.contains('No such file or directory')) {
+                errorAlertAndPop(
+                    'lib/premades/dist/noperish.service does not exist. The program cannot go on.',
+                    context);
+                return;
+              }
+            }
+          }
 
           // Enable NoPerish in Systemd
           updateMessage('Enabling noperish service');
