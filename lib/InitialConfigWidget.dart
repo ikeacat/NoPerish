@@ -192,6 +192,10 @@ class ICWState extends State<InitialConfigWidget> {
                     style: TextStyle(
                         color: Colors.blueGrey, fontStyle: FontStyle.italic),
                   ),
+                  Text(
+                      'PLEASE NOTE: If you are on Windows, make sure this is being run as administrator, and if you are on Linux, run as root.',
+                      style: TextStyle(
+                          color: Colors.blueGrey, fontStyle: FontStyle.italic))
                 ],
               ))),
     );
