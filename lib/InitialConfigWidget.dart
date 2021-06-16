@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:noperish/ChangelogWidget.dart';
 import 'package:noperish/DoingInstallWidget.dart';
 
 class InitialConfigWidget extends StatefulWidget {
@@ -143,46 +144,68 @@ class ICWState extends State<InitialConfigWidget> {
                       });
                     },
                   ),
-
-                  // Submit Button
-                  ElevatedButton(
-                    onPressed: () {
-                      if (combokey.currentState != null) {
-                        var val = combokey.currentState!.validate();
-                        if (!val) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content:
-                                Text('Fields on the form cannot be empty thx.'),
-                            duration: Duration(seconds: 5),
-                          ));
-                        } else {
-                          if (currentItem == 'Linux (Systemd)' ||
-                              currentItem ==
-                                  'Windows (Windows Task Scheduler)') {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => DoingInstallWidget(
-                                      username: username.text,
-                                      password: password.text,
-                                      platform: currentItem,
-                                    )));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Submit Button
+                      ElevatedButton(
+                        onPressed: () {
+                          if (combokey.currentState != null) {
+                            var val = combokey.currentState!.validate();
+                            if (!val) {
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(SnackBar(
                                 content: Text(
-                                    "macOS and Linux (Crontab) aren't supported yet. Sorry!"),
-                                duration: Duration(seconds: 7)));
-                            return;
+                                    'Fields on the form cannot be empty thx.'),
+                                duration: Duration(seconds: 5),
+                              ));
+                            } else {
+                              if (currentItem == 'Linux (Systemd)' ||
+                                  currentItem ==
+                                      'Windows (Windows Task Scheduler)') {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => DoingInstallWidget(
+                                          username: username.text,
+                                          password: password.text,
+                                          platform: currentItem,
+                                        )));
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                    content: Text(
+                                        "macOS and Linux (Crontab) aren't supported yet. Sorry!"),
+                                    duration: Duration(seconds: 7)));
+                                return;
+                              }
+                            }
                           }
-                        }
-                      }
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(
-                          bottom: 5, top: 5, left: 12, right: 12),
-                      child: Text(
-                        'Submit',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 5, top: 5, left: 12, right: 12),
+                          child: Text(
+                            'Submit',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
                       ),
-                    ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => ChangelogWidget()));
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.only(
+                              bottom: 5, top: 5, left: 12, right: 12),
+                          child: Text(
+                            'Changelog',
+                            style: TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      )
+                    ],
                   ),
                   SizedBox(
                     height: 3,
