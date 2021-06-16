@@ -3,13 +3,14 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 11 June 2021
+// Last Updated 16 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:io';
 
 import 'package:noperish/DoneWidgetLinux.dart';
+import 'package:noperish/DoneWidgetWin.dart';
 
 class DoingInstallWidget extends StatefulWidget {
   DoingInstallWidget({Key? key, this.platform, this.username, this.password})
@@ -181,6 +182,86 @@ class DIState extends State<DoingInstallWidget> {
       } else {
         errorAlertAndPop('Could not create /etc/noperish/', context);
         return;
+      }
+    } else if (widget.platform!.startsWith('Windows')) {
+      // Get the UserProfile environment variable.
+      var userDirectoryProcess =
+          await Process.run('echo', ['%USERPROFILE%'], runInShell: true);
+      var userDirectory = userDirectoryProcess.stdout.toString().trim();
+      userDirectory = userDirectory.replaceAll(r'\', '/');
+
+      updateMessage('Creating directory in User directory');
+      await Directory('$userDirectory/NoPerish').create();
+
+      updateMessage(
+          'Writing Username & PIN to $userDirectory/NoPerish/combo.cfg');
+      await File('$userDirectory/NoPerish/combo.cfg').writeAsString(
+          '${widget.username} ${ping.headers["x-pin"]}',
+          flush: true);
+
+      updateMessage(
+          'Copying startup script to $userDirectory/NoPerish/noperish.exe');
+      await File('lib/premades/dist/NPStartup-Windows.exe')
+          .copy('$userDirectory/NoPerish/noperish.exe');
+
+      updateMessage('Filling in username in RegisterTask.xml');
+      var regTask = await File('lib/premades/RegisterTask.xml').readAsString();
+      var winUsername =
+          await Process.run('echo', ['%username%'], runInShell: true);
+
+      regTask = regTask.replaceFirst('UserName', winUsername.stdout.trim());
+      print(regTask);
+
+      updateMessage(
+          'Writing modified XML Task to $userDirectory/NoPerish/RegisterTask.xml');
+      await File('$userDirectory/NoPerish/RegisterTask.xml')
+          .writeAsString(regTask, flush: true);
+
+      updateMessage('Registering Task');
+      var registerTask = await Process.run('schtasks', [
+        '/Create',
+        '/TN',
+        'NoPerish',
+        '/XML',
+        '$userDirectory/NoPerish/RegisterTask.xml'
+      ]);
+      if (registerTask.stdout.toString().contains('SUCCESS') ||
+          registerTask.stderr.toString().contains('SUCCESS')) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => DoneWidgetWin(
+                  whathappened: keepTrack,
+                )));
+      } else {
+        if (registerTask.stderr
+            .toString()
+            .contains('Cannot create a file when that file already exists.')) {
+          updateMessage(
+              'Task is already registered; Removing task and reregistering.');
+
+          await Process.run('schtasks', ['/Delete', '/TN', 'NoPerish', '/F']);
+          var registerTask2 = await Process.run('schtasks', [
+            '/Create',
+            '/TN',
+            'NoPerish',
+            '/XML',
+            '$userDirectory/NoPerish/RegisterTask.xml'
+          ]);
+          print(registerTask2.stdout);
+          print('err: ${registerTask2.stderr}');
+          if (registerTask2.stdout.toString().contains('SUCCESS') ||
+              registerTask2.stderr.toString().contains('SUCCESS')) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(
+                builder: (context) => DoneWidgetWin(
+                      whathappened: keepTrack,
+                    )));
+          } else {
+            errorAlertAndPop('Could not register task on reregister.', context);
+          }
+        } else {
+          errorAlertAndPop(
+              'Could not register task. STDERR: ${registerTask.stderr.toString()}, STDOUT: ${registerTask.stdout.toString()}',
+              context);
+        }
       }
     }
   }
