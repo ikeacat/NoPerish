@@ -31,7 +31,6 @@ class DIState extends State<DoingInstallWidget> {
   void doInstall(BuildContext context) async {
     // So that when setState rebuilds the request doesnt do this again.
     if (lock) {
-      print('lock');
       return;
     }
     lock = true;
@@ -39,9 +38,6 @@ class DIState extends State<DoingInstallWidget> {
     // Ping NS to verify credentials.
     updateMessage('Verifying Credentials with NS.');
     var ping = await pingNS();
-    print(ping.headers);
-    //print(ping.body);
-    print(ping.statusCode);
     if (ping.statusCode == 403) {
       errorAlertAndPop(
           "The password provided for this nation is invalid. (Status Code 403 Forbidden)",
@@ -97,7 +93,6 @@ class DIState extends State<DoingInstallWidget> {
             .writeAsString('${widget.username} ${ping.headers["x-pin"]}');
 
         updateMessage('Copying NPStartup binary to etc directory');
-        print(Directory.current);
         if (!await Directory('lib/premades').exists()) {
           errorAlertAndPop('Premades directory does not exist.', context);
         }
@@ -213,9 +208,6 @@ class DIState extends State<DoingInstallWidget> {
             '$userDirectoryNT' + r'\NoPerish\noperish.exe'
           ],
           runInShell: true);
-
-      print(mklink.stderr);
-      print(mklink.stdout);
 
       if (mklink.stderr.toString().contains('Access is denied')) {
         errorAlertAndPop('Access was denied while creating symlink.', context);
