@@ -226,6 +226,12 @@ class ICWState extends State<InitialConfigWidget> {
                   Text(
                       'PLEASE NOTE: If you are on Windows, make sure this is being run as administrator, and if you are on Linux, run as root.',
                       style: TextStyle(
+                          color: Colors.blueGrey, fontStyle: FontStyle.italic)),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Text('NoPerish v1.1.0',
+                      style: TextStyle(
                           color: Colors.blueGrey, fontStyle: FontStyle.italic))
                 ],
               ))),
