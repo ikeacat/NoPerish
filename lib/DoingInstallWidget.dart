@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 16 June 2021
+// Last Updated 18 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -203,66 +203,6 @@ class DIState extends State<DoingInstallWidget> {
           'Copying startup script to $userDirectory/NoPerish/noperish.exe');
       await File('lib/premades/dist/NPStartup-Windows.exe')
           .copy('$userDirectory/NoPerish/noperish.exe');
-
-      updateMessage('Filling in username in RegisterTask.xml');
-      var regTask = await File('lib/premades/RegisterTask.xml').readAsString();
-      var winUsername =
-          await Process.run('echo', ['%username%'], runInShell: true);
-
-      regTask = regTask.replaceFirst('UserName', winUsername.stdout.trim());
-      print(regTask);
-
-      updateMessage(
-          'Writing modified XML Task to $userDirectory/NoPerish/RegisterTask.xml');
-      await File('$userDirectory/NoPerish/RegisterTask.xml')
-          .writeAsString(regTask, flush: true);
-
-      updateMessage('Registering Task');
-      var registerTask = await Process.run('schtasks', [
-        '/Create',
-        '/TN',
-        'NoPerish',
-        '/XML',
-        '$userDirectory/NoPerish/RegisterTask.xml'
-      ]);
-      if (registerTask.stdout.toString().contains('SUCCESS') ||
-          registerTask.stderr.toString().contains('SUCCESS')) {
-        Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => DoneWidgetWin(
-                  whathappened: keepTrack,
-                )));
-      } else {
-        if (registerTask.stderr
-            .toString()
-            .contains('Cannot create a file when that file already exists.')) {
-          updateMessage(
-              'Task is already registered; Removing task and reregistering.');
-
-          await Process.run('schtasks', ['/Delete', '/TN', 'NoPerish', '/F']);
-          var registerTask2 = await Process.run('schtasks', [
-            '/Create',
-            '/TN',
-            'NoPerish',
-            '/XML',
-            '$userDirectory/NoPerish/RegisterTask.xml'
-          ]);
-          print(registerTask2.stdout);
-          print('err: ${registerTask2.stderr}');
-          if (registerTask2.stdout.toString().contains('SUCCESS') ||
-              registerTask2.stderr.toString().contains('SUCCESS')) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => DoneWidgetWin(
-                      whathappened: keepTrack,
-                    )));
-          } else {
-            errorAlertAndPop('Could not register task on reregister.', context);
-          }
-        } else {
-          errorAlertAndPop(
-              'Could not register task. STDERR: ${registerTask.stderr.toString()}, STDOUT: ${registerTask.stdout.toString()}',
-              context);
-        }
-      }
     }
   }
 
