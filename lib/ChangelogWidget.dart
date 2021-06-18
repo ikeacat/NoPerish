@@ -39,7 +39,8 @@ class ChangelogWidget extends StatelessWidget {
             changes: [
               'Added Windows support',
               'Added root & admin warning',
-              'Added this Changelog'
+              'Added this Changelog',
+              'Make it so that the default platform isnt Linux (Systemd)'
             ],
           ),
           ChangelogSection('1.0.0', changes: [

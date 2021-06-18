@@ -23,7 +23,7 @@ class ICWState extends State<InitialConfigWidget> {
 
   final combokey = GlobalKey<FormState>();
 
-  var currentItem = 'Linux (Systemd)';
+  var currentItem = 'Select a platform...';
 
   @override
   Widget build(BuildContext context) {
@@ -93,6 +93,7 @@ class ICWState extends State<InitialConfigWidget> {
                       style: TextStyle(fontStyle: FontStyle.italic),
                     ),
                     items: <String>[
+                      'Select a platform...',
                       'Linux (Systemd)',
                       'Linux (Crontab) (integrated but not supported yet)',
                       'macOS (not supported yet)',
@@ -168,6 +169,14 @@ class ICWState extends State<InitialConfigWidget> {
                                           password: password.text,
                                           platform: currentItem,
                                         )));
+                              } else if (currentItem ==
+                                  'Select a platform...') {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            "You need to select a platform."),
+                                        duration: Duration(seconds: 5)));
+                                return;
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                     content: Text(
