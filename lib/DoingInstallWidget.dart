@@ -187,8 +187,8 @@ class DIState extends State<DoingInstallWidget> {
       // Get the UserProfile environment variable.
       var userDirectoryProcess =
           await Process.run('echo', ['%USERPROFILE%'], runInShell: true);
-      var userDirectory = userDirectoryProcess.stdout.toString().trim();
-      userDirectory = userDirectory.replaceAll(r'\', '/');
+      var userDirectoryNT = userDirectoryProcess.stdout.toString().trim();
+      var userDirectory = userDirectoryNT.replaceAll(r'\', '/');
 
       updateMessage('Creating directory in User directory');
       await Directory('$userDirectory/NoPerish').create();
@@ -203,6 +203,39 @@ class DIState extends State<DoingInstallWidget> {
           'Copying startup script to $userDirectory/NoPerish/noperish.exe');
       await File('lib/premades/dist/NPStartup-Windows.exe')
           .copy('$userDirectory/NoPerish/noperish.exe');
+
+      updateMessage('Making link in Startup to noperish.exe');
+      var mklink = await Process.run(
+          'mklink',
+          [
+            '$userDirectoryNT' +
+                r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\NoPerish.lnk',
+            '$userDirectoryNT' + r'\NoPerish\noperish.exe'
+          ],
+          runInShell: true);
+
+      print(mklink.stderr);
+      print(mklink.stdout);
+
+      if (mklink.stderr.toString().contains('Access is denied')) {
+        errorAlertAndPop('Access was denied while creating symlink.', context);
+        return;
+      } else if (mklink.stderr
+          .toString()
+          .contains('Cannot create a file when that file already exists')) {
+        updateMessage('Symlink already exists, thats fine.');
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => DoneWidgetWin(
+                  whathappened: keepTrack,
+                )));
+        return;
+      } else {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+            builder: (context) => DoneWidgetWin(
+                  whathappened: keepTrack,
+                )));
+        return;
+      }
     }
   }
 

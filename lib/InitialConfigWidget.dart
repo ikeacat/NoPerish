@@ -95,8 +95,8 @@ class ICWState extends State<InitialConfigWidget> {
                     items: <String>[
                       'Linux (Systemd)',
                       'Linux (Crontab) (integrated but not supported yet)',
-                      'macOS (launchd) (not supported yet)',
-                      'Windows (Windows Task Scheduler)',
+                      'macOS (not supported yet)',
+                      'Windows',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
@@ -161,8 +161,7 @@ class ICWState extends State<InitialConfigWidget> {
                               ));
                             } else {
                               if (currentItem == 'Linux (Systemd)' ||
-                                  currentItem ==
-                                      'Windows (Windows Task Scheduler)') {
+                                  currentItem == 'Windows') {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => DoingInstallWidget(
                                           username: username.text,
