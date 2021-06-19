@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 18 June 2021
+// Last Updated 19 June 2021
 
 import 'dart:io';
 
@@ -219,7 +219,7 @@ class ICWState extends State<InitialConfigWidget> {
                     height: 3,
                   ),
                   Text(
-                    'Your password will never be stored on the device & is only sent to NationStates. Only the generated PIN & Nation name is stored.',
+                    'Your password will never be stored in plaintext on the device & is only sent to NationStates. Only the encrypted password & Nation name is stored.',
                     style: TextStyle(
                         color: Colors.blueGrey, fontStyle: FontStyle.italic),
                   ),
@@ -230,7 +230,7 @@ class ICWState extends State<InitialConfigWidget> {
                   SizedBox(
                     height: 10,
                   ),
-                  Text('NoPerish v1.1.0',
+                  Text('NoPerish v1.1.1',
                       style: TextStyle(
                           color: Colors.blueGrey, fontStyle: FontStyle.italic))
                 ],

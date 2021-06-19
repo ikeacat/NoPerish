@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 18 June 2021
+// Last Updated 19 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -38,6 +38,9 @@ class DIState extends State<DoingInstallWidget> {
     // Ping NS to verify credentials.
     updateMessage('Verifying Credentials with NS.');
     var ping = await pingNS();
+
+    print(ping.headers);
+
     if (ping.statusCode == 403) {
       errorAlertAndPop(
           "The password provided for this nation is invalid. (Status Code 403 Forbidden)",
@@ -88,9 +91,10 @@ class DIState extends State<DoingInstallWidget> {
       updateMessage('Creating /etc/noperish');
       var etcDirectory = await Directory('/etc/noperish').create();
       if (await etcDirectory.exists()) {
-        updateMessage('Writing username & PIN to /etc/noperish/combo.cfg');
+        updateMessage(
+            'Writing username & autologin to /etc/noperish/combo.cfg');
         await File('/etc/noperish/combo.cfg')
-            .writeAsString('${widget.username} ${ping.headers["x-pin"]}');
+            .writeAsString('${widget.username} ${ping.headers["x-autologin"]}');
 
         updateMessage('Copying NPStartup binary to etc directory');
         if (!await Directory('lib/premades').exists()) {
@@ -189,9 +193,9 @@ class DIState extends State<DoingInstallWidget> {
       await Directory('$userDirectory/NoPerish').create();
 
       updateMessage(
-          'Writing Username & PIN to $userDirectory/NoPerish/combo.cfg');
+          'Writing Username & Autologin to $userDirectory/NoPerish/combo.cfg');
       await File('$userDirectory/NoPerish/combo.cfg').writeAsString(
-          '${widget.username} ${ping.headers["x-pin"]}',
+          '${widget.username} ${ping.headers["x-autologin"]}',
           flush: true);
 
       updateMessage(

@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 18 June 2021
+// Last Updated 19 June 2021
 
 import 'package:flutter/material.dart';
 
@@ -34,6 +34,12 @@ class ChangelogWidget extends StatelessWidget {
           ),
           SizedBox(height: 10),
           // START OF SECTION HERE
+          ChangelogSection(
+            '1.1.1',
+            changes: [
+              'Switched to saving autologin instead of PIN (the pin expires apparently).'
+            ],
+          ),
           ChangelogSection(
             '1.1.0',
             changes: [

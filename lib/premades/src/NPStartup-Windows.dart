@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 14 June 2021
+// Last Updated 19 June 2021
 
 import 'dart:io';
 import 'package:http/http.dart';
@@ -22,7 +22,7 @@ void main(List<String> args) async {
       Uri.parse('https://www.nationstates.net/cgi-bin/api.cgi'),
       headers: {
         'User-Agent': 'NoPerish <mfryk268@gmail.com>',
-        'X-Pin': creds[1].trim()
+        'X-Autologin': creds[1].trim()
       },
       body: {
         'nation': creds[0].trim(),
