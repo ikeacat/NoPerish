@@ -3,10 +3,10 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 8 June 2021
+// Last Updated 19 June 2021
 
 import 'package:flutter/material.dart';
-import 'package:noperish/InitialConfigWidget.dart';
+import 'package:noperish/LandingWidget.dart';
 
 void main() => runApp(NoPerish());
 
@@ -18,7 +18,7 @@ class NoPerish extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.purple,
       ),
-      home: InitialConfigWidget(),
+      home: LandingPage(),
     );
   }
 }

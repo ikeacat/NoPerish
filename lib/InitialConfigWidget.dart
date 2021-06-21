@@ -3,13 +3,12 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 19 June 2021
-
-import 'dart:io';
+// Last Updated 21 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:noperish/ChangelogWidget.dart';
 import 'package:noperish/DoingInstallWidget.dart';
+import 'package:noperish/misc/Header.dart';
 
 class InitialConfigWidget extends StatefulWidget {
   InitialConfigWidget({Key? key}) : super(key: key);
@@ -34,17 +33,11 @@ class ICWState extends State<InitialConfigWidget> {
               child: Column(
                 children: [
                   // Header Texts
-                  Text(
-                    'NoPerish',
-                    style: TextStyle(
-                        fontSize: 80,
-                        color: Colors.deepPurple,
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 3),
-                  ),
-                  Text(
-                    'Never perish. Ever.',
-                    style: TextStyle(fontSize: 15, color: Colors.purple),
+                  HeaderWidget(),
+                  BackButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
                   ),
 
                   // Combo Form
@@ -227,12 +220,6 @@ class ICWState extends State<InitialConfigWidget> {
                       'PLEASE NOTE: If you are on Windows, make sure this is being run as administrator, and if you are on Linux, run as root.',
                       style: TextStyle(
                           color: Colors.blueGrey, fontStyle: FontStyle.italic)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text('NoPerish v1.1.1',
-                      style: TextStyle(
-                          color: Colors.blueGrey, fontStyle: FontStyle.italic))
                 ],
               ))),
     );
