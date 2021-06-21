@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:noperish/ChangelogWidget.dart';
 import 'package:noperish/InitialConfigWidget.dart';
 import 'package:noperish/misc/Header.dart';
+import 'package:noperish/misc/VersionConstant.dart';
 
 class LandingPage extends StatelessWidget {
   @override
@@ -77,7 +78,7 @@ class LandingPage extends StatelessWidget {
             SizedBox(
               height: 10,
             ),
-            Text('NoPerish v1.1.1',
+            Text('NoPerish v$versionNoPerish',
                 style: TextStyle(
                     color: Colors.blueGrey, fontStyle: FontStyle.italic))
           ],
