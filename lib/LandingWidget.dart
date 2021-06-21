@@ -5,6 +5,8 @@
 // Or just look at the LICENSE file.
 // Last Updated 21 June 2021
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:noperish/ChangelogWidget.dart';
 import 'package:noperish/InitialConfigWidget.dart';
@@ -64,8 +66,7 @@ class LandingPage extends StatelessWidget {
             SizedBox(height: 7),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ChangelogWidget()));
+                  exit(0);
                 },
                 child: Padding(
                   padding:
