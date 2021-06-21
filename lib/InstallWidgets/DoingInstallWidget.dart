@@ -3,14 +3,14 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 19 June 2021
+// Last Updated 21 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'dart:io';
 
-import 'package:noperish/DoneWidgetLinux.dart';
-import 'package:noperish/DoneWidgetWin.dart';
+import 'package:noperish/DoneWidgets/DoneWidgetLinux.dart';
+import 'package:noperish/DoneWidgets/DoneWidgetWin.dart';
 
 class DoingInstallWidget extends StatefulWidget {
   DoingInstallWidget({Key? key, this.platform, this.username, this.password})

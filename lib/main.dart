@@ -6,7 +6,7 @@
 // Last Updated 19 June 2021
 
 import 'package:flutter/material.dart';
-import 'package:noperish/LandingWidget.dart';
+import 'package:noperish/misc/LandingWidget.dart';
 
 void main() => runApp(NoPerish());
 

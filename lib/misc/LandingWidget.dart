@@ -8,8 +8,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:noperish/ChangelogWidget.dart';
-import 'package:noperish/InitialConfigWidget.dart';
+import 'package:noperish/misc/ChangelogWidget.dart';
+import 'package:noperish/InstallWidgets/InitialConfigWidget.dart';
 import 'package:noperish/misc/Header.dart';
 import 'package:noperish/misc/VersionConstant.dart';
 

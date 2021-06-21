@@ -6,8 +6,8 @@
 // Last Updated 21 June 2021
 
 import 'package:flutter/material.dart';
-import 'package:noperish/ChangelogWidget.dart';
-import 'package:noperish/DoingInstallWidget.dart';
+import 'package:noperish/misc/ChangelogWidget.dart';
+import 'package:noperish/InstallWidgets/DoingInstallWidget.dart';
 import 'package:noperish/misc/Header.dart';
 
 class InitialConfigWidget extends StatefulWidget {
