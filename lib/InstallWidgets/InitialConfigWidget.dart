@@ -6,6 +6,7 @@
 // Last Updated 21 June 2021
 
 import 'package:flutter/material.dart';
+import 'package:noperish/misc/BoldTextBar.dart';
 import 'package:noperish/misc/ChangelogWidget.dart';
 import 'package:noperish/InstallWidgets/DoingInstallWidget.dart';
 import 'package:noperish/misc/Header.dart';
@@ -33,13 +34,7 @@ class ICWState extends State<InitialConfigWidget> {
               child: Column(
                 children: [
                   // Header Texts
-                  HeaderWidget(),
-                  BackButton(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-
+                  BoldTextBar(title: 'Install'),
                   // Combo Form
                   Form(
                     key: combokey,

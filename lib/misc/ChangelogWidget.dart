@@ -6,6 +6,7 @@
 // Last Updated 21 June 2021
 
 import 'package:flutter/material.dart';
+import 'package:noperish/misc/BoldTextBar.dart';
 
 class ChangelogWidget extends StatelessWidget {
   @override
@@ -15,28 +16,16 @@ class ChangelogWidget extends StatelessWidget {
       Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Combined Changelog & Back button
-              BackButton(
-                color: Colors.black,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              Text('Changelog',
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.w800)),
-            ],
-          ),
+          BoldTextBar(title: 'Changelog'),
           SizedBox(height: 10),
           // START OF SECTION HERE
           ChangelogSection(
             'N/A',
-            changes: ['Landing page'],
+            changes: [
+              'Landing page',
+              'Added Bold Text Bar',
+              'Switched Install Widget to Bold text bar'
+            ],
           ),
           ChangelogSection(
             '1.1.1',
