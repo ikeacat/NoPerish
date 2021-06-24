@@ -20,7 +20,7 @@ class ChangelogWidget extends StatelessWidget {
           SizedBox(height: 10),
           // START OF SECTION HERE
           ChangelogSection(
-            'N/A',
+            '1.2.0',
             changes: [
               'Added Landing page',
               'Added Check for Update page',
