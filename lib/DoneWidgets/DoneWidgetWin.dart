@@ -8,31 +8,20 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 
-class DoneWidgetWin extends StatefulWidget {
-  DoneWidgetWin({Key? key, this.whathappened}) : super(key: key);
+class DoneWidgetWin extends StatelessWidget {
+  DoneWidgetWin({Key? key, required this.whathappened}) : super(key: key);
 
-  final List<String>? whathappened;
+  final List<String> whathappened;
 
-  DWWState createState() => DWWState();
-}
-
-class DWWState extends State<DoneWidgetWin> {
-  final wwdKey = GlobalKey();
-  var wwdList = <Text>[];
-
-  void whatWeDid() {
-    if (widget.whathappened != null) {
-      var newlist = <Text>[];
-      for (String event in widget.whathappened!) {
-        newlist.add(Text(
-          event,
-          style: TextStyle(color: Colors.blueGrey, fontStyle: FontStyle.italic),
-        ));
-      }
-      setState(() {
-        wwdList = newlist;
-      });
+  List<Text> whatWeDid() {
+    var newlist = <Text>[];
+    for (String event in whathappened) {
+      newlist.add(Text(
+        event,
+        style: TextStyle(color: Colors.blueGrey, fontStyle: FontStyle.italic),
+      ));
     }
+    return newlist;
   }
 
   @override
@@ -69,8 +58,7 @@ class DWWState extends State<DoneWidgetWin> {
             SizedBox(height: 6),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              key: wwdKey,
-              children: wwdList,
+              children: whatWeDid(),
             ),
             SizedBox(height: 15),
             ElevatedButton(
