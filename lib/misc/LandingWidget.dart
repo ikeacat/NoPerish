@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 21 June 2021
+// Last Updated 24 June 2021
 
 import 'dart:io';
 
@@ -74,7 +74,7 @@ class LandingPage extends StatelessWidget {
                   padding:
                       EdgeInsets.only(bottom: 10, top: 10, left: 24, right: 24),
                   child: Text(
-                    'Update',
+                    'Updates',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 )),

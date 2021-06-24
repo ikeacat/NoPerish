@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 21 June 2021
+// Last Updated 24 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -22,7 +22,8 @@ class ChangelogWidget extends StatelessWidget {
           ChangelogSection(
             'N/A',
             changes: [
-              'Landing page',
+              'Added Landing page',
+              'Added Check for Update page',
               'Added Bold Text Bar',
               'Switched Install Widget to Bold text bar'
             ],
