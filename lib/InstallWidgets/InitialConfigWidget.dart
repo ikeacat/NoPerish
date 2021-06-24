@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 21 June 2021
+// Last Updated 24 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -184,23 +184,6 @@ class ICWState extends State<InitialConfigWidget> {
                           ),
                         ),
                       ),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => ChangelogWidget()));
-                        },
-                        child: Padding(
-                          padding: EdgeInsets.only(
-                              bottom: 5, top: 5, left: 12, right: 12),
-                          child: Text(
-                            'Changelog',
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                   SizedBox(
