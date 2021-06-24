@@ -39,8 +39,6 @@ class DIState extends State<DoingInstallWidget> {
     updateMessage('Verifying Credentials with NS.');
     var ping = await pingNS();
 
-    print(ping.headers);
-
     if (ping.statusCode == 403) {
       errorAlertAndPop(
           "The password provided for this nation is invalid. (Status Code 403 Forbidden)",

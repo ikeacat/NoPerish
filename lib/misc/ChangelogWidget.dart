@@ -27,7 +27,8 @@ class ChangelogWidget extends StatelessWidget {
               'Added Bold Text Bar',
               'Added Change Credentials',
               'Remove Changelog button on Install widget',
-              'Switched Install Widget to Bold text bar'
+              'Switched Install Widget to Bold text bar',
+              'Behind the scenes improvements'
             ],
           ),
           ChangelogSection(
