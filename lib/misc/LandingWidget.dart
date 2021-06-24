@@ -8,6 +8,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:noperish/InstallWidgets/RepairConfigWidget.dart';
 import 'package:noperish/misc/ChangelogWidget.dart';
 import 'package:noperish/InstallWidgets/InitialConfigWidget.dart';
 import 'package:noperish/misc/Header.dart';
@@ -50,6 +51,20 @@ class LandingPage extends StatelessWidget {
               style: ButtonStyle(
                   backgroundColor: MaterialStateProperty.all(Colors.grey)),
             ),
+            SizedBox(height: 7),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => RepairConfig()));
+                },
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 10, top: 10, left: 24, right: 24),
+                  child: Text(
+                    'Change Credentials',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
             SizedBox(height: 7),
             ElevatedButton(
                 onPressed: () {

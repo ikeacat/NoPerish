@@ -6,6 +6,7 @@
 // Last Updated 24 June 2021
 
 import 'package:flutter/material.dart';
+import 'package:noperish/InstallWidgets/DoingRepairWidget.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
 
 class RepairConfig extends StatefulWidget {
@@ -35,6 +36,7 @@ class RC extends State<RepairConfig> {
                     TextFormField(
                       autocorrect: false,
                       decoration: InputDecoration(labelText: 'Nation Name'),
+                      controller: nation,
                       validator: (value) {
                         if (value == null || value.isEmpty || value == '') {
                           return 'Nation field cannot be empty.';
@@ -46,6 +48,7 @@ class RC extends State<RepairConfig> {
                       autocorrect: false,
                       decoration: InputDecoration(labelText: 'Password'),
                       obscureText: true,
+                      controller: pw,
                       validator: (value) {
                         if (value == null || value.isEmpty || value == '') {
                           return 'Password field cannot be empty.';
@@ -136,7 +139,11 @@ class RC extends State<RepairConfig> {
                         if (currentItem == 'Linux (Systemd)' ||
                             currentItem == 'Windows') {
                           // TODO: Make sure to update this IF statement when macOS or Crontab is supported :)
-                          // TODO: Push to Repair
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => DoingRepair(
+                                  platform: currentItem,
+                                  nation: nation.text,
+                                  pw: pw.text)));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(
