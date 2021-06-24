@@ -24,10 +24,9 @@ class ChangelogWidget extends StatelessWidget {
             changes: [
               'Added Landing page',
               'Added Check for Update page',
-              'Added Bold Text Bar',
               'Added Change Credentials',
               'Remove Changelog button on Install widget',
-              'Switched Install Widget to Bold text bar',
+              'Switched Install Widget to Bold Text Bar',
               'Behind the scenes improvements'
             ],
           ),
