@@ -20,6 +20,12 @@ class ChangelogWidget extends StatelessWidget {
           SizedBox(height: 10),
           // START OF SECTION HERE
           ChangelogSection(
+            '1.2.1',
+            changes: [
+              'Added Got Issues? widget',
+            ],
+          ),
+          ChangelogSection(
             '1.2.0',
             changes: [
               'Added Landing page',

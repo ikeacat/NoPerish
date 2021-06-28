@@ -5,4 +5,4 @@
 // Or just look at the LICENSE file.
 // Last Updated 24 June 2021
 
-const versionNoPerish = '1.2.0';
+const versionNoPerish = '1.2.1';
