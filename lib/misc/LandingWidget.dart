@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:noperish/InstallWidgets/RepairConfigWidget.dart';
 import 'package:noperish/misc/ChangelogWidget.dart';
 import 'package:noperish/InstallWidgets/InitialConfigWidget.dart';
+import 'package:noperish/misc/GotIssuesWidget.dart';
 import 'package:noperish/misc/Header.dart';
 import 'package:noperish/misc/UpdateWidget.dart';
 import 'package:noperish/misc/VersionConstant.dart';
@@ -90,6 +91,20 @@ class LandingPage extends StatelessWidget {
                       EdgeInsets.only(bottom: 10, top: 10, left: 24, right: 24),
                   child: Text(
                     'Updates',
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                )),
+            SizedBox(height: 7),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => GotIssues()));
+                },
+                child: Padding(
+                  padding:
+                      EdgeInsets.only(bottom: 10, top: 10, left: 24, right: 24),
+                  child: Text(
+                    'Got Issues?',
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
                 )),
