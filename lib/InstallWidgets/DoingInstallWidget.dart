@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 June 2021
+// Last Updated 28 June 2021
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -240,7 +240,51 @@ class DIState extends State<DoingInstallWidget> {
     });
   }
 
-  void errorAlertAndPop(String message, BuildContext context) {
+  void removeFiles() async {
+    // Show Cleaning Dialog
+    AlertDialog cleaningUpDialog = AlertDialog(
+      content: Row(
+        children: [
+          CircularProgressIndicator(),
+          Padding(
+            child: Text('Cleaning Up...'),
+            padding: EdgeInsets.only(left: 17),
+          )
+        ],
+      ),
+    );
+    showDialog(
+        context: context,
+        builder: (context) {
+          return cleaningUpDialog;
+        });
+
+    // Remove files based on platform.
+    // Also btw, we are assuming root / admin.
+    if (widget.platform!.startsWith('Linux')) {
+      try {
+        await Process.run('rm', ['-Rf', '/etc/NoPerish']);
+      } catch (err) {
+        // Dont do anything
+      }
+
+      if (widget.platform == 'Linux (Systemd)') {
+        try {
+          await Process.run('rm', ['/etc/systemd/system/noperish.service']);
+        } catch (err) {
+          // Dont do anything
+        }
+      }
+    } else if (widget.platform! == 'Windows') {
+      // TODO: Windows deletion
+    }
+
+    Navigator.of(context).pop();
+    return;
+  }
+
+  void errorAlertAndPop(String message, BuildContext context,
+      {bool shouldAttemptRemovalOfFiles = false}) {
     AlertDialog alert = AlertDialog(
       title: Text(
         'Error',
@@ -251,6 +295,9 @@ class DIState extends State<DoingInstallWidget> {
         TextButton(
             onPressed: () {
               // Pop to the form
+              if (shouldAttemptRemovalOfFiles) {
+                removeFiles();
+              }
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
