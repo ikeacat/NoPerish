@@ -126,7 +126,11 @@ class LandingPage extends StatelessWidget {
             ),
             Text('NoPerish v$versionNoPerish',
                 style: TextStyle(
-                    color: Colors.blueGrey, fontStyle: FontStyle.italic))
+                    color: Colors.blueGrey, fontStyle: FontStyle.italic)),
+            Text(
+                'Source code is avaliable at https://github.com/ikeacat/NoPerish',
+                style: TextStyle(
+                    color: Colors.blueGrey, fontStyle: FontStyle.italic)),
           ],
         ),
       ),
