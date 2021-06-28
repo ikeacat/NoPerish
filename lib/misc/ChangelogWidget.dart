@@ -23,6 +23,7 @@ class ChangelogWidget extends StatelessWidget {
             '1.2.1',
             changes: [
               'Added Got Issues? widget',
+              'License link at bottom of Landing (it was always bundled with a release)',
             ],
           ),
           ChangelogSection(

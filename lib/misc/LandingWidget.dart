@@ -131,6 +131,31 @@ class LandingPage extends StatelessWidget {
                 'Source code is avaliable at https://github.com/ikeacat/NoPerish',
                 style: TextStyle(
                     color: Colors.blueGrey, fontStyle: FontStyle.italic)),
+            SizedBox(height: 7),
+            RichText(
+              text: TextSpan(
+                  text: 'NoPerish is licensed under the ',
+                  style: TextStyle(
+                      color: Colors.blueGrey, fontStyle: FontStyle.italic),
+                  children: [
+                    TextSpan(
+                        text: 'GNU General Public License v3.0',
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ]),
+            ),
+            RichText(
+              text: TextSpan(
+                  text:
+                      'The license was bundled with this release & repo in the file "LICENSE", or you can get a copy at ',
+                  style: TextStyle(
+                      color: Colors.blueGrey, fontStyle: FontStyle.italic),
+                  children: [
+                    TextSpan(
+                        text:
+                            'https://www.gnu.org/licenses/gpl-3.0-standalone.html',
+                        style: TextStyle(fontWeight: FontWeight.bold))
+                  ]),
+            )
           ],
         ),
       ),
