@@ -20,7 +20,7 @@ class ChangelogWidget extends StatelessWidget {
           SizedBox(height: 10),
           // START OF SECTION HERE
           ChangelogSection(
-            '1.3.0',
+            '1.2.1',
             changes: [
               '🎉 Uninstall for Windows and Linux (Systemd)! 🎉',
               'Added Got Issues? widget',
