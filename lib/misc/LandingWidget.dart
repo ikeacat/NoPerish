@@ -3,12 +3,13 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 28 June 2021
+// Last Updated 24 November 2021
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:noperish/InstallWidgets/RepairConfigWidget.dart';
+import 'package:noperish/InstallWidgets/UninstallConfirmWidget.dart';
 import 'package:noperish/misc/ChangelogWidget.dart';
 import 'package:noperish/InstallWidgets/InitialConfigWidget.dart';
 import 'package:noperish/misc/GotIssuesWidget.dart';
@@ -41,7 +42,8 @@ class LandingPage extends StatelessWidget {
             SizedBox(height: 7),
             ElevatedButton(
               onPressed: () {
-                return;
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => UninstallConfirmWidget()));
               },
               child: Padding(
                 padding:
@@ -49,8 +51,6 @@ class LandingPage extends StatelessWidget {
                 child: Text('Uninstall',
                     style: TextStyle(fontWeight: FontWeight.bold)),
               ),
-              style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.grey)),
             ),
             SizedBox(height: 7),
             ElevatedButton(
