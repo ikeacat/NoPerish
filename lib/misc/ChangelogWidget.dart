@@ -26,6 +26,7 @@ class ChangelogWidget extends StatelessWidget {
               'Check for update on launch',
               'Added Got Issues? widget',
               'License link at bottom of Landing (it was always bundled with a release)',
+              'Fixed Systemd fail due to service starting before DNS can resolve',
               'Behind the scenes improvements'
             ],
           ),

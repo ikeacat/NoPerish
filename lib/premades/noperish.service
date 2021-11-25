@@ -1,5 +1,5 @@
 [Unit]
-Description=Never Perish. Ever.
+Description=NoPerish
 After=network.target network-online.target
 Wants=network-online.target
 StartLimitIntervalSec=2
@@ -7,6 +7,7 @@ StartLimitIntervalSec=2
 [Service]
 Type=oneshot
 ExecStart=/etc/noperish/NPStartup-Linux
+ExecStartPre=/bin/timeout 60 /bin/bash -c 'until host github.com; do sleep 1; done'
 
 [Install]
 WantedBy=multi-user.target
