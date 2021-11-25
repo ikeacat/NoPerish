@@ -22,6 +22,7 @@ class ChangelogWidget extends StatelessWidget {
           ChangelogSection(
             '1.3.0',
             changes: [
+              '🎉 Uninstall for Windows! 🎉',
               'Added Got Issues? widget',
               'License link at bottom of Landing (it was always bundled with a release)',
             ],
