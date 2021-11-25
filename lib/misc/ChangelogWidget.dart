@@ -23,8 +23,10 @@ class ChangelogWidget extends StatelessWidget {
             '1.2.1',
             changes: [
               '🎉 Uninstall for Windows and Linux (Systemd)! 🎉',
+              'Check for update on launch',
               'Added Got Issues? widget',
               'License link at bottom of Landing (it was always bundled with a release)',
+              'Behind the scenes improvements'
             ],
           ),
           ChangelogSection(
