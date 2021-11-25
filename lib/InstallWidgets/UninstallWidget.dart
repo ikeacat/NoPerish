@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 November 2021
+// Last Updated 25 November 2021
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -83,7 +83,29 @@ class UninstallWidgetState extends State<UninstallWidget> {
             context);
         return;
       }
-    } else if (Platform.isLinux) {}
+    } else if (Platform.isLinux) {
+      updateMessage("Detected Linux -- looking for systemd or crontab");
+      if (await File("/etc/systemd/system/noperish.service").exists()) {
+        updateMessage("Removing systemd service file");
+        await File("/etc/systemd/system/noperish.service")
+            .delete(recursive: true);
+      } else {
+        updateMessage(
+            "Could not find service file. Still gonna try to remove /etc/noperish");
+        // TODO: Update this when crontab is added.
+      }
+      if (await Directory("/etc/noperish/").exists()) {
+        updateMessage("Removing /etc/noperish installation.");
+        await Directory("/etc/noperish").delete(recursive: true);
+      } else {
+        errorAlertAndPop(
+            "Could not detect an installation. We might have removed a service file if it exists somewhere else.",
+            context);
+        return;
+      }
+      Navigator.of(context)
+          .push(MaterialPageRoute(builder: (context) => DoneRemoval()));
+    }
   }
 
   String currentMessage = "Detecting platform";
