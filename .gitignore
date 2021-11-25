@@ -22,3 +22,10 @@ doc/api/
 
 .idea
 .vscode
+
+# Do not include build files.
+windows/
+macos/
+linux/
+ios/
+android/

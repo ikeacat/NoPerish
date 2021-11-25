@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 28 June 2021
+// Last Updated 25 November 2021
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -22,8 +22,11 @@ class ChangelogWidget extends StatelessWidget {
           ChangelogSection(
             '1.2.1',
             changes: [
+              '🎉 Uninstall for Windows and Linux (Systemd)! 🎉',
+              'Check for update on launch',
               'Added Got Issues? widget',
               'License link at bottom of Landing (it was always bundled with a release)',
+              'Behind the scenes improvements'
             ],
           ),
           ChangelogSection(
