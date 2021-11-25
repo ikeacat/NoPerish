@@ -18,6 +18,7 @@ class UninstallWidget extends StatefulWidget {
 
 class UninstallWidgetState extends State<UninstallWidget> {
   var lock = false;
+  List<String> keepTrack = ["Detecting platform"];
 
   void errorAlertAndPop(String message, BuildContext context) {
     AlertDialog alert = AlertDialog(
@@ -74,8 +75,8 @@ class UninstallWidgetState extends State<UninstallWidget> {
               ],
               runInShell: true);
           updateMessage("Done! -- Transitioning...");
-          Navigator.of(context)
-              .push(MaterialPageRoute(builder: (context) => DoneRemoval()));
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => DoneRemoval(whathappened: keepTrack)));
         });
       } else {
         errorAlertAndPop(
@@ -103,14 +104,17 @@ class UninstallWidgetState extends State<UninstallWidget> {
             context);
         return;
       }
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => DoneRemoval()));
+      Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => DoneRemoval(
+                whathappened: keepTrack,
+              )));
     }
   }
 
   String currentMessage = "Detecting platform";
 
   void updateMessage(String message) {
+    keepTrack.add(message);
     setState(() {
       currentMessage = message;
     });
