@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 25 November 2021
+// Last Updated 26 November 2021
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -55,11 +55,16 @@ class ChangelogWidget extends StatelessWidget {
               'Added this Changelog',
               'Make it so that the default platform isnt Linux (Systemd)'
             ],
+            isRemoved: true,
           ),
-          ChangelogSection('1.0.0', changes: [
-            'Initial design of the app',
-            'Added Linux (Systemd) support'
-          ])
+          ChangelogSection(
+            '1.0.0',
+            changes: [
+              'Initial design of the app',
+              'Added Linux (Systemd) support'
+            ],
+            isRemoved: true,
+          )
         ],
       ),
     ]));
@@ -67,10 +72,11 @@ class ChangelogWidget extends StatelessWidget {
 }
 
 class ChangelogSection extends StatelessWidget {
-  ChangelogSection(this.versionNumber, {this.changes});
+  ChangelogSection(this.versionNumber, {this.changes, this.isRemoved = false});
 
   final String versionNumber;
   final List<String>? changes;
+  final bool isRemoved;
 
   List<Widget> generateTexts() {
     List<Widget> listBuild = [];
@@ -92,12 +98,23 @@ class ChangelogSection extends StatelessWidget {
     return listBuild;
   }
 
+  Widget generateNotFound(BuildContext context) {
+    if (isRemoved) {
+      return Text(
+        "Release no longer avaliable.",
+        style: TextStyle(color: Colors.red, fontStyle: FontStyle.italic),
+      );
+    }
+    return SizedBox();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         Text('v' + versionNumber,
             style: TextStyle(fontSize: 42, fontWeight: FontWeight.bold)),
+        generateNotFound(context),
         SizedBox(height: 15),
         Column(
             children: generateTexts(),
