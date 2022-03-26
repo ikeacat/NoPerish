@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 19 June 2021
+// Last Updated 26 March 2022
 
 import 'dart:io';
 import 'package:http/http.dart';
@@ -14,7 +14,8 @@ void main(List<String> args) async {
   var up = upProc.stdout.toString().trim().replaceAll(r'\', '/');
 
   // get config
-  final config = await File('$up/NoPerish/combo.cfg').readAsString();
+  final config =
+      await File('$up/AppData/Local/NoPerish/combo.cfg').readAsString();
   final creds = config.split(' ');
 
   // ping NationStates
@@ -29,7 +30,7 @@ void main(List<String> args) async {
         'q': 'ping'
       });
 
-  var logfile = await File('$up/NoPerish/startup.log').create();
+  var logfile = await File('$up/AppData/Local/NoPerish/startup.log').create();
   var now = DateTime.now();
 
   if (response.body.contains('<PING>1</PING>')) {

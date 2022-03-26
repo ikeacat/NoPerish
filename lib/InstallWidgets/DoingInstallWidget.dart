@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 28 June 2021
+// Last Updated 26 March 2022
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
