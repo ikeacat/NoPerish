@@ -187,19 +187,19 @@ class DIState extends State<DoingInstallWidget> {
       var userDirectoryNT = userDirectoryProcess.stdout.toString().trim();
       var userDirectory = userDirectoryNT.replaceAll(r'\', '/');
 
-      updateMessage('Creating directory in User directory');
-      await Directory('$userDirectory/NoPerish').create();
+      // Write Configuration
+      updateMessage('Writing Username & Autologin.');
+      await Directory('$userDirectory/AppData/Local/NoPerish').create();
+      await File('$userDirectory/AppData/Local/NoPerish/combo.cfg')
+          .writeAsString('${widget.username} ${ping.headers["x-autologin"]}',
+              flush: true);
 
+      // Write the program to Program Files
       updateMessage(
-          'Writing Username & Autologin to $userDirectory/NoPerish/combo.cfg');
-      await File('$userDirectory/NoPerish/combo.cfg').writeAsString(
-          '${widget.username} ${ping.headers["x-autologin"]}',
-          flush: true);
-
-      updateMessage(
-          'Copying startup script to $userDirectory/NoPerish/noperish.exe');
+          'Copying startup script to C:/Program Files/NoPerish/noperish.exe');
+      await Directory("C:/Program Files/NoPerish").create();
       await File('lib/premades/dist/NPStartup-Windows.exe')
-          .copy('$userDirectory/NoPerish/noperish.exe');
+          .copy('C:/Program Files/NoPerish/noperish.exe');
 
       updateMessage('Making link in Startup to noperish.exe');
       var mklink = await Process.run(
@@ -207,7 +207,7 @@ class DIState extends State<DoingInstallWidget> {
           [
             '$userDirectoryNT' +
                 r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\NoPerish.lnk',
-            '$userDirectoryNT' + r'\NoPerish\noperish.exe'
+            r'C:\Program Files\NoPerish\noperish.exe'
           ],
           runInShell: true);
 
