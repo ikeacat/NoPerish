@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 26 November 2021
+// Last Updated 26 March 2022
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -19,6 +19,15 @@ class ChangelogWidget extends StatelessWidget {
           BoldTextBar(title: 'Changelog'),
           SizedBox(height: 10),
           // START OF SECTION HERE
+          ChangelogSection(
+            "<unversioned>",
+            changes: [
+              "Windows: Startup script is now written to Program Files",
+              "Windows: Credentials are now written to AppData",
+              "Linux (Systemd): Startup script is now written to /usr/sbin",
+              "Behind the scenes improvements"
+            ],
+          ),
           ChangelogSection(
             '1.2.1',
             changes: [
