@@ -73,10 +73,6 @@ class DIState extends State<DoingInstallWidget> {
       return;
     }
 
-    //setState(() {
-    //  currentMessage = 'Running root check (id)';
-    //});
-
     // This is where it gets platform specific.
     if (widget.platform!.startsWith('Linux')) {
       updateMessage('Checking for root.');
@@ -94,13 +90,13 @@ class DIState extends State<DoingInstallWidget> {
         await File('/etc/noperish/combo.cfg')
             .writeAsString('${widget.username} ${ping.headers["x-autologin"]}');
 
-        updateMessage('Copying NPStartup binary to etc directory');
+        updateMessage('Copying startup binary to /usr/sbin');
         if (!await Directory('lib/premades').exists()) {
           errorAlertAndPop('Premades directory does not exist.', context);
         }
         try {
           await File('lib/premades/dist/NPStartup-Linux')
-              .copy('/etc/noperish/NPStartup-Linux');
+              .copy('/usr/sbin/noperish');
         } catch (err) {
           if (err is FileSystemException) {
             if (err.message.contains('No such file or directory')) {

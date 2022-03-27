@@ -6,7 +6,7 @@ StartLimitIntervalSec=2
 
 [Service]
 Type=oneshot
-ExecStart=/etc/noperish/NPStartup-Linux
+ExecStart=/usr/sbin/noperish
 ExecStartPre=/bin/timeout 60 /bin/bash -c 'until host github.com; do sleep 1; done'
 
 [Install]
