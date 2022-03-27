@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 25 November 2021
+// Last Updated 26 March 2022
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -62,6 +62,8 @@ class UninstallWidgetState extends State<UninstallWidget> {
       var userDirectory = userDirectoryNT.replaceAll(r'\', '/');
 
       if (await Directory(userDirectory + "/NoPerish").exists()) {
+        // Keeping this in case someone tries to remove old Windows install.
+        updateMessage("Found ancient installation.");
         updateMessage("Removing $userDirectory/NoPerish");
         await Directory(userDirectory + "/NoPerish")
             .delete(recursive: true)
@@ -78,6 +80,24 @@ class UninstallWidgetState extends State<UninstallWidget> {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => DoneRemoval(whathappened: keepTrack)));
         });
+      } else if (await Directory("C:/Program Files/NoPerish").exists()) {
+        updateMessage("Found modern installation.");
+        updateMessage("Removing Program Files folder. (The script)");
+        await Directory("C:/Program Files/NoPerish").delete(recursive: true);
+        updateMessage("Removing AppData folder. (The config)");
+        await Directory(userDirectory + "/AppData/Local/NoPerish")
+            .delete(recursive: true);
+        updateMessage("Removing startup file.");
+        await Process.run(
+            "del",
+            [
+              userDirectoryNT +
+                  r"\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\NoPerish.lnk"
+            ],
+            runInShell: true);
+        updateMessage("Done! -- Transitioning...");
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => DoneRemoval(whathappened: keepTrack)));
       } else {
         errorAlertAndPop(
             "No windows installation found :(\nWe didn't remove ANYTHING.",

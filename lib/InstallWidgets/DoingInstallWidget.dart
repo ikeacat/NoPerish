@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 28 June 2021
+// Last Updated 26 March 2022
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -73,10 +73,6 @@ class DIState extends State<DoingInstallWidget> {
       return;
     }
 
-    //setState(() {
-    //  currentMessage = 'Running root check (id)';
-    //});
-
     // This is where it gets platform specific.
     if (widget.platform!.startsWith('Linux')) {
       updateMessage('Checking for root.');
@@ -94,13 +90,13 @@ class DIState extends State<DoingInstallWidget> {
         await File('/etc/noperish/combo.cfg')
             .writeAsString('${widget.username} ${ping.headers["x-autologin"]}');
 
-        updateMessage('Copying NPStartup binary to etc directory');
+        updateMessage('Copying startup binary to /usr/sbin');
         if (!await Directory('lib/premades').exists()) {
           errorAlertAndPop('Premades directory does not exist.', context);
         }
         try {
           await File('lib/premades/dist/NPStartup-Linux')
-              .copy('/etc/noperish/NPStartup-Linux');
+              .copy('/usr/sbin/noperish');
         } catch (err) {
           if (err is FileSystemException) {
             if (err.message.contains('No such file or directory')) {
@@ -187,19 +183,19 @@ class DIState extends State<DoingInstallWidget> {
       var userDirectoryNT = userDirectoryProcess.stdout.toString().trim();
       var userDirectory = userDirectoryNT.replaceAll(r'\', '/');
 
-      updateMessage('Creating directory in User directory');
-      await Directory('$userDirectory/NoPerish').create();
+      // Write Configuration
+      updateMessage('Writing Username & Autologin.');
+      await Directory('$userDirectory/AppData/Local/NoPerish').create();
+      await File('$userDirectory/AppData/Local/NoPerish/combo.cfg')
+          .writeAsString('${widget.username} ${ping.headers["x-autologin"]}',
+              flush: true);
 
+      // Write the program to Program Files
       updateMessage(
-          'Writing Username & Autologin to $userDirectory/NoPerish/combo.cfg');
-      await File('$userDirectory/NoPerish/combo.cfg').writeAsString(
-          '${widget.username} ${ping.headers["x-autologin"]}',
-          flush: true);
-
-      updateMessage(
-          'Copying startup script to $userDirectory/NoPerish/noperish.exe');
+          'Copying startup script to C:/Program Files/NoPerish/noperish.exe');
+      await Directory("C:/Program Files/NoPerish").create();
       await File('lib/premades/dist/NPStartup-Windows.exe')
-          .copy('$userDirectory/NoPerish/noperish.exe');
+          .copy('C:/Program Files/NoPerish/noperish.exe');
 
       updateMessage('Making link in Startup to noperish.exe');
       var mklink = await Process.run(
@@ -207,7 +203,7 @@ class DIState extends State<DoingInstallWidget> {
           [
             '$userDirectoryNT' +
                 r'\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup\NoPerish.lnk',
-            '$userDirectoryNT' + r'\NoPerish\noperish.exe'
+            r'C:\Program Files\NoPerish\noperish.exe'
           ],
           runInShell: true);
 
