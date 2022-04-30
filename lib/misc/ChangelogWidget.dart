@@ -25,6 +25,7 @@ class ChangelogWidget extends StatelessWidget {
               "Windows: Startup script is now written to Program Files",
               "Windows: Credentials are now written to AppData",
               "Linux (Systemd): Startup script is now written to /usr/sbin",
+              "Linux (Systemd): arm64 support",
               "Behind the scenes improvements"
             ],
           ),
