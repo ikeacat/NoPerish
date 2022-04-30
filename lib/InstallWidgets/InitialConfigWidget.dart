@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 26 March 2022
+// Last Updated 29 April 2022
 
 import 'package:flutter/material.dart';
 import 'package:noperish/misc/BoldTextBar.dart';
@@ -80,8 +80,9 @@ class ICWState extends State<InitialConfigWidget> {
                     ),
                     items: <String>[
                       'Select a platform...',
-                      'Linux (Systemd)',
-                      'Windows',
+                      'Linux (Systemd) (x64)',
+                      'Linux (Systemd) (arm64)',
+                      'Windows (x64)',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
@@ -145,8 +146,8 @@ class ICWState extends State<InitialConfigWidget> {
                                 duration: Duration(seconds: 5),
                               ));
                             } else {
-                              if (currentItem == 'Linux (Systemd)' ||
-                                  currentItem == 'Windows') {
+                              if (currentItem.startsWith('Linux (Systemd)') ||
+                                  currentItem.startsWith('Windows')) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => DoingInstallWidget(
                                           username: username.text,

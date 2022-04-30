@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 26 March 2022
+// Last Updated 29 April 2022
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
@@ -94,21 +94,37 @@ class DIState extends State<DoingInstallWidget> {
         if (!await Directory('lib/premades').exists()) {
           errorAlertAndPop('Premades directory does not exist.', context);
         }
-        try {
-          await File('lib/premades/dist/NPStartup-Linux')
-              .copy('/usr/sbin/noperish');
-        } catch (err) {
-          if (err is FileSystemException) {
-            if (err.message.contains('No such file or directory')) {
-              errorAlertAndPop(
-                  'lib/premades/dist/NPStartup-Linux does not exist. The program cannot go on.',
-                  context);
-              return;
+        if (widget.platform!.contains("x64")) {
+          try {
+            await File('lib/premades/dist/NPStartup-Linux-amd64')
+                .copy('/usr/sbin/noperish');
+          } catch (err) {
+            if (err is FileSystemException) {
+              if (err.message.contains('No such file or directory')) {
+                errorAlertAndPop(
+                    'lib/premades/dist/NPStartup-Linux-amd64 does not exist. The program cannot go on.',
+                    context);
+                return;
+              }
+            }
+          }
+        } else if (widget.platform!.contains("arm64")) {
+          try {
+            await File('lib/premades/dist/NPStartup-Linux-arm64')
+                .copy('/usr/sbin/noperish');
+          } catch (err) {
+            if (err is FileSystemException) {
+              if (err.message.contains('No such file or directory')) {
+                errorAlertAndPop(
+                    'lib/premades/dist/NPStartup-Linux-arm64 does not exist. The program cannot go on.',
+                    context);
+                return;
+              }
             }
           }
         }
 
-        if (widget.platform! == 'Linux (Systemd)') {
+        if (widget.platform!.startsWith('Linux (Systemd)')) {
           updateMessage('Copying and Installing noperish.service');
           try {
             await File('lib/premades/noperish.service')
@@ -194,9 +210,14 @@ class DIState extends State<DoingInstallWidget> {
       updateMessage(
           'Copying startup script to C:/Program Files/NoPerish/noperish.exe');
       await Directory("C:/Program Files/NoPerish").create();
-      await File('lib/premades/dist/NPStartup-Windows.exe')
-          .copy('C:/Program Files/NoPerish/noperish.exe');
-
+      if (widget.platform!.contains("x64")) {
+        await File('lib/premades/dist/NPStartup-Windows-amd64.exe')
+            .copy('C:/Program Files/NoPerish/noperish.exe');
+      } else {
+        errorAlertAndPop(
+            "Failed to get specified architecture from platform.", context);
+        return;
+      }
       updateMessage('Making link in Startup to noperish.exe');
       var mklink = await Process.run(
           'mklink',
