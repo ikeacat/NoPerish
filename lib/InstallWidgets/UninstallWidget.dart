@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 26 March 2022
+// Last Updated 30 April 2022
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -123,6 +123,13 @@ class UninstallWidgetState extends State<UninstallWidget> {
             "Could not detect an installation. We might have removed a service file if it exists somewhere else.",
             context);
         return;
+      }
+      if (await File("/usr/sbin/noperish").exists()) {
+        updateMessage("Removing /usr/sbin/noperish executable.");
+        await File("/usr/sbin/noperish").delete();
+      } else {
+        updateMessage(
+            "No /usr/sbin/noperish found. Probably old installation & removed with etc");
       }
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => DoneRemoval(
