@@ -80,8 +80,9 @@ class ICWState extends State<InitialConfigWidget> {
                     ),
                     items: <String>[
                       'Select a platform...',
-                      'Linux (Systemd)',
-                      'Windows',
+                      'Linux (Systemd) (x64)',
+                      'Linux (Systemd) (arm64)',
+                      'Windows (x64)',
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                           value: value,
@@ -145,8 +146,8 @@ class ICWState extends State<InitialConfigWidget> {
                                 duration: Duration(seconds: 5),
                               ));
                             } else {
-                              if (currentItem == 'Linux (Systemd)' ||
-                                  currentItem == 'Windows') {
+                              if (currentItem.startsWith('Linux (Systemd)') ||
+                                  currentItem.startsWith('Windows')) {
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => DoingInstallWidget(
                                           username: username.text,
