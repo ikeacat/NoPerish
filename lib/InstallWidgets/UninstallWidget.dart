@@ -131,6 +131,13 @@ class UninstallWidgetState extends State<UninstallWidget> {
         updateMessage(
             "No /usr/sbin/noperish found. Probably old installation & removed with etc");
       }
+      if (await File("/var/log/noperish.log").exists()) {
+        updateMessage("Removing log.");
+        await File("/var/log/noperish.log").delete();
+      } else {
+        updateMessage(
+            "No log found. Probably old installation & removed with etc");
+      }
       Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => DoneRemoval(
                 whathappened: keepTrack,
