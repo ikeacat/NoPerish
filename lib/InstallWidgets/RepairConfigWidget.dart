@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 June 2021
+// Last Updated 30 April 2022
 
 import 'package:flutter/material.dart';
 import 'package:noperish/InstallWidgets/DoingRepairWidget.dart';
@@ -72,8 +72,6 @@ class RC extends State<RepairConfig> {
                 items: <String>[
                   'Select your installed platform...',
                   'Linux (Systemd)',
-                  'Linux (Crontab) (integrated but not supported yet)',
-                  'macOS (not supported yet)',
                   'Windows',
                 ].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(

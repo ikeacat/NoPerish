@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 June 2021
+// Last Updated 30 April 2022
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -101,7 +101,8 @@ class DR extends State<DoingRepair> {
       var userDirectoryNT = userDirectoryProcess.stdout.toString().trim();
       var userDirectory = userDirectoryNT.replaceAll(r'\', '/');
 
-      var checkForINSDIR = await Directory('$userDirectory/NoPerish').exists();
+      var checkForINSDIR =
+          await Directory('$userDirectory/AppData/Local/NoPerish').exists();
       if (!checkForINSDIR) {
         errorAlertAndPop(
             'Could not detect existing installation. Are you sure you have an installation?',
@@ -109,7 +110,7 @@ class DR extends State<DoingRepair> {
         return;
       }
 
-      dirWrite = '$userDirectory/NoPerish/combo.cfg';
+      dirWrite = '$userDirectory/AppData/Local/NoPerish/combo.cfg';
     }
 
     if (dirWrite != null) {
