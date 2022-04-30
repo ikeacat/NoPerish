@@ -20,7 +20,7 @@ class ChangelogWidget extends StatelessWidget {
           SizedBox(height: 10),
           // START OF SECTION HERE
           ChangelogSection(
-            "<unversioned>",
+            "1.3.0",
             changes: [
               "Windows: Startup script is now written to Program Files",
               "Windows: Credentials are now written to AppData",
