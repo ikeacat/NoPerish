@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 June 2021
+// Last Updated 30 April 2022
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -49,7 +49,7 @@ class DoneWidgetWin extends StatelessWidget {
               height: 5,
             ),
             Text(
-                'We recommend that when you startup this device next that you check the log at [your user directory]/NoPerish/startup.log'),
+                'We recommend that when you startup this device next that you check the log at [your user directory]/AppData/Local/NoPerish/startup.log'),
             SizedBox(height: 15),
             Text(
               'What We Did',

@@ -3,7 +3,7 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 24 June 2021
+// Last Updated April 30 2022
 
 import 'package:flutter/material.dart';
 import 'dart:io';
@@ -49,7 +49,7 @@ class DoneWidgetLinux extends StatelessWidget {
               height: 5,
             ),
             Text(
-                'We recommend that when you startup this device next that you check /etc/noperish/startup.log'),
+                'We recommend that when you startup this device next that you check /var/log/noperish.log'),
             SizedBox(height: 5),
             Text(
                 'If you chose to integrate with Systemd, also check the status of the service at the next startup.'),
