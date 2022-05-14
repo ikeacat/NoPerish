@@ -29,3 +29,5 @@ macos/
 linux/
 ios/
 android/
+
+*.iml
