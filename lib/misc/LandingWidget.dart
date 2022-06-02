@@ -3,15 +3,15 @@
 // Public License v3.0.
 // Get a copy here: https://www.gnu.org/licenses/gpl-3.0-standalone.html
 // Or just look at the LICENSE file.
-// Last Updated 25 November 2021
+// Last Updated 2 June 2022
 
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:noperish/ConfigWidgets/BranchToPlatformWidget.dart';
 import 'package:noperish/InstallWidgets/RepairConfigWidget.dart';
 import 'package:noperish/InstallWidgets/UninstallConfirmWidget.dart';
 import 'package:noperish/misc/ChangelogWidget.dart';
-import 'package:noperish/InstallWidgets/InitialConfigWidget.dart';
 import 'package:noperish/misc/GotIssuesWidget.dart';
 import 'package:noperish/misc/Header.dart';
 import 'package:noperish/misc/UpdateWidget.dart';
@@ -71,7 +71,7 @@ class LandingPageState extends State<LandingPage> {
             ElevatedButton(
                 onPressed: () {
                   Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => InitialConfigWidget()));
+                      builder: (context) => BranchToPlatformWidget()));
                 },
                 child: Padding(
                   padding:
